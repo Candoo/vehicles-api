@@ -146,6 +146,9 @@ type Vehicle struct {
 	MonthlyPayment     string `gorm:"type:varchar(20)" json:"monthly_payment"`
 	MonthlyFinanceType string `gorm:"type:varchar(20)" json:"monthly_finance_type"`
 
+	// Offer flag
+	HasOffer bool `gorm:"default:false;index" json:"has_offer"`
+
 	// Timestamps
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
