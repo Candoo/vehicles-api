@@ -88,9 +88,8 @@ func (m MediaURLArray) Value() (driver.Value, error) {
 
 // Vehicle represents a complete vehicle listing matching NexusPoint API structure
 type Vehicle struct {
-	ID                   uint      `gorm:"primaryKey;autoIncrement" json:"id"`
+	VehicleID            int       `gorm:"primaryKey" json:"vehicle_id"`
 	AdvertClassification string    `gorm:"type:varchar(20);index" json:"advert_classification"`
-	VehicleID            int       `json:"vehicle_id"`
 	AttentionGrabber     *string   `gorm:"type:text" json:"attention_grabber"`
 	BodyType             string    `gorm:"type:varchar(50);index" json:"body_type"`
 	BodyTypeSlug         string    `gorm:"type:varchar(50)" json:"body_type_slug"`

@@ -104,7 +104,7 @@ func (h *VehicleHandler) GetVehicles(c *gin.Context) {
 func (h *VehicleHandler) GetVehicleByID(c *gin.Context) {
 	// Parse ID from path parameter
 	idStr := c.Param("id")
-	id, err := strconv.ParseUint(idStr, 10, 32)
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "invalid vehicle ID",
@@ -113,7 +113,7 @@ func (h *VehicleHandler) GetVehicleByID(c *gin.Context) {
 	}
 
 	// Fetch vehicle from repository
-	vehicle, err := h.repo.GetVehicleByID(uint(id))
+	vehicle, err := h.repo.GetVehicleByID(id)
 	if err != nil {
 		if err.Error() == "vehicle not found" {
 			c.JSON(http.StatusNotFound, gin.H{

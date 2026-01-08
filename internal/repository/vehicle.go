@@ -120,7 +120,7 @@ func (r *VehicleRepository) GetVehicles(filters models.VehicleFilters) ([]models
 }
 
 // GetVehicleByID retrieves a single vehicle by ID
-func (r *VehicleRepository) GetVehicleByID(id uint) (*models.Vehicle, error) {
+func (r *VehicleRepository) GetVehicleByID(id int) (*models.Vehicle, error) {
 	var vehicle models.Vehicle
 
 	if err := r.db.First(&vehicle, id).Error; err != nil {
