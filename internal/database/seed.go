@@ -32,10 +32,11 @@ func SeedDatabase(db *gorm.DB) error {
 		return fmt.Errorf("failed to load vehicle data: %w", err)
 	}
 
-	// Insert vehicles one by one to ensure primary key values are respected
-	// (GORM's batch insert doesn't handle vehicle_id=0 properly)
+	// Insert vehicles with explicit primary key values
+	// Disable auto-increment behavior for primary key by using Omit with empty list
 	for i, vehicle := range vehicles {
-		if err := db.Create(&vehicle).Error; err != nil {
+		// Use Omit("") to force GORM to include the primary key in INSERT
+		if err := db.Omit("").Create(&vehicle).Error; err != nil {
 			return fmt.Errorf("failed to insert vehicle %d: %w", vehicle.VehicleID, err)
 		}
 
