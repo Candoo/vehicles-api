@@ -32,20 +32,16 @@ func SeedDatabase(db *gorm.DB) error {
 		return fmt.Errorf("failed to load vehicle data: %w", err)
 	}
 
-	// Insert vehicles in batches for better performance
-	batchSize := 100
-	for i := 0; i < len(vehicles); i += batchSize {
-		end := i + batchSize
-		if end > len(vehicles) {
-			end = len(vehicles)
+	// Insert vehicles one by one to ensure primary key values are respected
+	// (GORM's batch insert doesn't handle vehicle_id=0 properly)
+	for i, vehicle := range vehicles {
+		if err := db.Create(&vehicle).Error; err != nil {
+			return fmt.Errorf("failed to insert vehicle %d: %w", vehicle.VehicleID, err)
 		}
 
-		batch := vehicles[i:end]
-		if err := db.Create(&batch).Error; err != nil {
-			return fmt.Errorf("failed to insert batch: %w", err)
+		if (i+1)%10 == 0 || i+1 == len(vehicles) {
+			log.Printf("Inserted %d of %d vehicles", i+1, len(vehicles))
 		}
-
-		log.Printf("Inserted batch %d-%d of %d vehicles", i+1, end, len(vehicles))
 	}
 
 	log.Printf("Successfully seeded database with %d vehicles", len(vehicles))
