@@ -16,24 +16,47 @@ A RESTful API built with Go, Gin, and PostgreSQL that serves vehicle listings wi
 
 ### Option 1: Docker (Recommended)
 
-```bash
-# Start PostgreSQL and API (automatically installs dependencies and generates Swagger docs)
-docker-compose up -d
+**One command to get started:**
 
+```bash
+docker-compose up -d
+```
+
+That's it! The API will be available at `http://localhost:8080`
+
+**No configuration needed** - uses sensible defaults for local development.
+
+<details>
+<summary>Optional: Customize settings</summary>
+
+Create a `.env` file to override defaults:
+```bash
+cp .env.example .env
+# Edit .env with your preferred settings
+```
+</details>
+
+**What happens automatically:**
+- ✅ Installs all Go dependencies
+- ✅ Generates Swagger documentation
+- ✅ Builds the application
+- ✅ Starts PostgreSQL database
+- ✅ Seeds database with 36 vehicles on first run
+
+**Useful commands:**
+```bash
 # View logs
 docker-compose logs -f
 
+# Restart services
+docker-compose restart
+
 # Stop services
 docker-compose down
+
+# Reset database
+docker-compose down -v && docker-compose up -d
 ```
-
-The API will be available at `http://localhost:8080`
-
-**Note:** Docker build automatically:
-- Installs all Go dependencies
-- Generates Swagger documentation
-- Builds the application
-- Seeds the database on first run
 
 ### Option 2: Local Development
 
@@ -49,12 +72,9 @@ The API will be available at `http://localhost:8080`
 go mod download
 ```
 
-2. Configure environment:
+2. Set up environment variables:
 ```bash
-# Copy example environment file
 cp .env.example .env
-
-# Edit .env with your local database settings if needed
 ```
 
 3. Start PostgreSQL (via Docker):
