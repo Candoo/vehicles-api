@@ -128,7 +128,7 @@ type Vehicle struct {
 	Slug                 string    `gorm:"type:varchar(255);index" json:"slug"`
 	Status               string    `gorm:"type:varchar(50)" json:"status"`
 	StockID              string    `gorm:"type:varchar(50);index" json:"stock_id"`
-	TaxRateValue         string    `gorm:"type:varchar(20)" json:"tax_rate_value"`
+	TaxRateValue         *string   `gorm:"type:varchar(20)" json:"tax_rate_value"`
 	Transmission         string    `gorm:"type:varchar(50);index" json:"transmission"`
 	Vat                  string    `gorm:"type:varchar(20)" json:"vat"`
 	VatScheme            string    `gorm:"type:varchar(50)" json:"vat_scheme"`
