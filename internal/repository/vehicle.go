@@ -85,7 +85,7 @@ func (r *VehicleRepository) GetVehicles(filters models.VehicleFilters) ([]models
 
 	// Fetch paginated results
 	if err := query.
-		Order("id ASC").
+		Order("vehicle_id ASC").
 		Limit(filters.ResultsPerPage).
 		Offset(offset).
 		Find(&vehicles).Error; err != nil {
