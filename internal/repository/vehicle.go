@@ -99,11 +99,12 @@ func (r *VehicleRepository) GetVehicles(filters models.VehicleFilters) ([]models
 	}
 
 	// Get additional statistics
-	var allTotal, totalNew, totalUsed, offerVehicles int64
+	var allTotal, totalNew, totalUsed int64
 	r.db.Model(&models.Vehicle{}).Count(&allTotal)
 	r.db.Model(&models.Vehicle{}).Where("LOWER(advert_classification) = ?", "new").Count(&totalNew)
 	r.db.Model(&models.Vehicle{}).Where("LOWER(advert_classification) = ?", "used").Count(&totalUsed)
-	r.db.Model(&models.Vehicle{}).Where("has_offer = ?", true).Count(&offerVehicles)
+	// TODO: Add has_offer field to model if needed
+	// r.db.Model(&models.Vehicle{}).Where("has_offer = ?", true).Count(&offerVehicles)
 
 	metadata := &models.ResponseMetadata{
 		CurrentPage:       filters.Page,
@@ -113,7 +114,7 @@ func (r *VehicleRepository) GetVehicles(filters models.VehicleFilters) ([]models
 		AllTotal:          allTotal,
 		TotalNewVehicles:  totalNew,
 		TotalUsedVehicles: totalUsed,
-		OfferVehicles:     offerVehicles,
+		OfferVehicles:     0, // TODO: Calculate when has_offer field is added
 	}
 
 	return vehicles, metadata, nil
