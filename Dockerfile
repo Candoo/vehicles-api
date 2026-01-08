@@ -16,8 +16,14 @@ COPY go.mod go.sum ./
 # Download dependencies
 RUN go mod download
 
+# Install swag for Swagger documentation generation
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+
 # Copy source code
 COPY . .
+
+# Generate Swagger documentation
+RUN swag init -g cmd/api/main.go
 
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/api
@@ -35,6 +41,9 @@ COPY --from=builder /app/main .
 
 # Copy scripts directory for seeding data
 COPY --from=builder /app/scripts ./scripts
+
+# Copy generated Swagger documentation
+COPY --from=builder /app/docs ./docs
 
 # Expose port
 EXPOSE 8080

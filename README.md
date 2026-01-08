@@ -17,7 +17,7 @@ A RESTful API built with Go, Gin, and PostgreSQL that serves vehicle listings wi
 ### Option 1: Docker (Recommended)
 
 ```bash
-# Start PostgreSQL and API
+# Start PostgreSQL and API (automatically installs dependencies and generates Swagger docs)
 docker-compose up -d
 
 # View logs
@@ -28,6 +28,12 @@ docker-compose down
 ```
 
 The API will be available at `http://localhost:8080`
+
+**Note:** Docker build automatically:
+- Installs all Go dependencies
+- Generates Swagger documentation
+- Builds the application
+- Seeds the database on first run
 
 ### Option 2: Local Development
 
@@ -229,7 +235,9 @@ Access interactive API documentation at:
 http://localhost:8080/swagger/index.html
 ```
 
-To regenerate after code changes:
+**Docker users:** Swagger docs are automatically generated during build.
+
+**Local development:** Generate/regenerate after code changes:
 ```bash
 swag init -g cmd/api/main.go
 ```
