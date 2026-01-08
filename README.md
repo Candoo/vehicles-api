@@ -176,10 +176,12 @@ vehicle-api/
 ├── scripts/
 │   └── nexuspoint_vehicles.json  # Seed data
 ├── docs/                     # Swagger documentation
-├── docker-compose.yml        # Docker orchestration
+├── docker-compose.yml        # Docker orchestration (local)
+├── docker-compose.prod.yml   # Production override
 ├── Dockerfile               # Container image
 ├── Makefile                 # Build automation
-├── .env.example             # Example environment variables
+├── .env.example             # Local environment template
+├── .env.production.example  # Production environment template
 └── .env                     # Environment variables (not tracked)
 ```
 
@@ -257,15 +259,58 @@ GORM AutoMigrate runs automatically on startup. Schema changes in `internal/mode
 
 ## Production Deployment
 
-```bash
-# Build binary
-make build
+### Option 1: Docker Compose (with external database)
 
-# Or build Docker image
+```bash
+# 1. Create production environment file
+cp .env.production.example .env.production
+
+# 2. Edit .env.production with your database credentials
+# DB_HOST=your-rds-endpoint.amazonaws.com
+# DB_USER=prod_user
+# DB_PASSWORD=strong_password
+# DB_SSLMODE=require
+
+# 3. Deploy using production override (skips local postgres)
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.production up -d
+
+# 4. Check logs
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f api
+```
+
+### Option 2: Standalone Docker Container
+
+```bash
+# Build image
 docker build -t vehicle-api:latest .
 
-# Run container
-docker run -p 8080:8080 --env-file .env vehicle-api:latest
+# Run with environment variables
+docker run -d \
+  -p 8080:8080 \
+  -e DB_HOST=your-db-host.com \
+  -e DB_USER=prod_user \
+  -e DB_PASSWORD=strong_password \
+  -e DB_NAME=vehicles_production \
+  -e DB_SSLMODE=require \
+  -e GIN_MODE=release \
+  --name vehicle-api \
+  vehicle-api:latest
+
+# Or use env file
+docker run -d -p 8080:8080 --env-file .env.production vehicle-api:latest
+```
+
+### Option 3: Build Binary
+
+```bash
+# Build
+make build
+
+# Run with environment variables
+export DB_HOST=your-db-host.com
+export DB_USER=prod_user
+# ... other vars
+./bin/api
 ```
 
 ## Troubleshooting
