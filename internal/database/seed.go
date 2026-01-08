@@ -90,10 +90,5 @@ func loadVehicleData() ([]models.Vehicle, error) {
 		return nil, fmt.Errorf("failed to decode JSON: %w", err)
 	}
 
-	// Reset IDs to let the database auto-generate them
-	for i := range vehicles {
-		vehicles[i].ID = 0
-	}
-
 	return vehicles, nil
 }
