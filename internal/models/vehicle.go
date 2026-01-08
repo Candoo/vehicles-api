@@ -169,7 +169,7 @@ type ResponseMetadata struct {
 	AllTotal           int64 `json:"all_total,omitempty"`
 	TotalNewVehicles   int64 `json:"total_new_vehicles,omitempty"`
 	TotalUsedVehicles  int64 `json:"total_used_vehicles,omitempty"`
-	OfferVehicles      int64 `json:"offer_vehicles,omitempty"`
+	OfferVehicles      int64 `json:"offer_vehicles"`
 }
 
 // VehicleFilters contains filtering options for vehicle queries
