@@ -43,16 +43,12 @@ The API will be available at `http://localhost:8080`
 go mod download
 ```
 
-2. Configure environment (edit `.env` if needed):
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=vehicles_db
-DB_SSLMODE=disable
-API_PORT=8080
-GIN_MODE=debug
+2. Configure environment:
+```bash
+# Copy example environment file
+cp .env.example .env
+
+# Edit .env with your local database settings if needed
 ```
 
 3. Start PostgreSQL (via Docker):
@@ -177,7 +173,8 @@ vehicle-api/
 ├── docker-compose.yml        # Docker orchestration
 ├── Dockerfile               # Container image
 ├── Makefile                 # Build automation
-└── .env                     # Environment variables
+├── .env.example             # Example environment variables
+└── .env                     # Environment variables (not tracked)
 ```
 
 ## Make Commands
@@ -195,16 +192,18 @@ make clean         # Clean build artifacts
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DB_HOST` | PostgreSQL host | localhost |
-| `DB_PORT` | PostgreSQL port | 5432 |
-| `DB_USER` | Database user | postgres |
-| `DB_PASSWORD` | Database password | postgres |
-| `DB_NAME` | Database name | vehicles_db |
-| `DB_SSLMODE` | SSL mode | disable |
-| `API_PORT` | API server port | 8080 |
-| `GIN_MODE` | Gin mode (debug/release) | debug |
+Copy [.env.example](.env.example) to `.env` and configure:
+
+| Variable | Description | Default | Production Example |
+|----------|-------------|---------|-------------------|
+| `DB_HOST` | PostgreSQL host | localhost | your-db.amazonaws.com |
+| `DB_PORT` | PostgreSQL port | 5432 | 5432 |
+| `DB_USER` | Database user | postgres | prod_user |
+| `DB_PASSWORD` | Database password | postgres | strong_password |
+| `DB_NAME` | Database name | vehicles_db | vehicles_production |
+| `DB_SSLMODE` | SSL mode | disable | require |
+| `API_PORT` | API server port | 8080 | 8080 |
+| `GIN_MODE` | Gin mode | debug | release |
 
 ## Database
 
