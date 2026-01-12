@@ -5,8 +5,8 @@ import (
     "os"
     "sync"
 
-    "github.com/Candoo/vehicles-api/internal/database"
     "github.com/Candoo/vehicles-api/internal/handlers"
+    "github.com/Candoo/vehicles-api/internal/repository"
     "github.com/gin-gonic/gin"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
@@ -26,7 +26,7 @@ func getDB() *gorm.DB {
         var err error
         db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
         if err != nil {
-            return 
+            return
         }
     })
     return db
@@ -43,8 +43,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    vehicleHandler := handlers.NewVehicleHandler(databaseInstance)
-    
+    vehicleRepo := repository.NewVehicleRepository(databaseInstance)
+    vehicleHandler := handlers.NewVehicleHandler(vehicleRepo)
+
     api := router.Group("/api")
     {
         api.GET("/vehicles", vehicleHandler.GetVehicles)
