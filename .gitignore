@@ -32,11 +32,13 @@ go.work
 Thumbs.db
 
 # Docs (regenerated)
-docs/docs.go
-docs/swagger.json
-docs/swagger.yaml
+# docs/docs.go
+# docs/swagger.json
+# docs/swagger.yaml
 
 # Data
-*.json
+# *.json
 !package.json
 !scripts/nexuspoint_vehicles.json
+.vercel
+.env*.local
