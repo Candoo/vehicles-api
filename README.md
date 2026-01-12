@@ -12,6 +12,19 @@ A RESTful API built with Go, Gin, and PostgreSQL that serves vehicle listings wi
 - 🐳 Docker support
 - 🔄 CORS enabled
 
+## Quick Links (Running Locally)
+
+Once the API is running:
+
+| Resource | URL | Purpose |
+|----------|-----|---------|
+| **API Base** | http://localhost:8080 | REST API endpoint |
+| **Swagger UI** | http://localhost:8080/swagger/index.html | Interactive API documentation |
+| **Health Check** | http://localhost:8080/health | API health/liveness check |
+| **Vehicle List** | http://localhost:8080/vehicles | Get all vehicles (paginated) |
+| **Makes List** | http://localhost:8080/vehicles/makes | Available vehicle makes |
+| **Models List** | http://localhost:8080/vehicles/models | Available vehicle models |
+
 ## Quick Start
 
 ### Option 1: Docker (Recommended)
@@ -43,10 +56,25 @@ cp .env.example .env
 - ✅ Starts PostgreSQL database
 - ✅ Seeds database with 36 vehicles on first run
 
+**Verify it's running:**
+```bash
+# Check service is up
+curl http://localhost:8080/health
+
+# View Swagger docs
+open http://localhost:8080/swagger/index.html
+
+# Get sample vehicles
+curl "http://localhost:8080/vehicles?page=1&results_per_page=5"
+```
+
 **Useful commands:**
 ```bash
 # View logs
 docker-compose logs -f
+
+# View API logs only
+docker-compose logs -f api
 
 # Restart services
 docker-compose restart
@@ -250,18 +278,52 @@ docker-compose down -v
 docker-compose up -d
 ```
 
-## Swagger Documentation
+## API Documentation
+
+### Swagger/OpenAPI Documentation
 
 Access interactive API documentation at:
 ```
 http://localhost:8080/swagger/index.html
 ```
 
+The Swagger UI provides:
+- ✅ Complete API endpoint reference
+- ✅ Interactive request/response examples
+- ✅ Query parameter documentation
+- ✅ Try-it-out functionality for testing endpoints
+- ✅ Response schema documentation
+
 **Docker users:** Swagger docs are automatically generated during build.
 
 **Local development:** Generate/regenerate after code changes:
 ```bash
 swag init -g cmd/api/main.go
+```
+
+### Quick API Testing
+
+```bash
+# Test API is responding
+curl http://localhost:8080/health
+
+# Get all vehicles (with pagination)
+curl "http://localhost:8080/vehicles?page=1&results_per_page=10"
+
+# Get specific vehicle
+curl "http://localhost:8080/vehicles/1"
+
+# Get vehicle by registration number (VRM)
+curl "http://localhost:8080/vehicles/vrm/BX63NSJ"
+
+# Get available makes
+curl "http://localhost:8080/vehicles/makes"
+
+# Filter by classification
+curl "http://localhost:8080/vehicles?advert_classification=Used"
+
+# Complex filtering
+curl "http://localhost:8080/vehicles?make=Skoda&min_price=5000&max_price=10000"
 ```
 
 ## Development
