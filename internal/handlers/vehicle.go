@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Candoo/vehicle-api/internal/models"
-	"github.com/Candoo/vehicle-api/internal/repository"
+	"github.com/Candoo/vehicles-api/internal/models"
+	"github.com/Candoo/vehicles-api/internal/repository"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Candoo/vehicle-api/internal/config"
-	"github.com/Candoo/vehicle-api/internal/models"
+	"github.com/Candoo/vehicles-api/internal/config"
+	"github.com/Candoo/vehicles-api/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

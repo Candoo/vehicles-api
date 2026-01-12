@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Candoo/vehicle-api/internal/models"
+	"github.com/Candoo/vehicles-api/internal/models"
 	"gorm.io/gorm"
 )
 

@@ -10,11 +10,11 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"github.com/Candoo/vehicle-api/internal/config"
-	"github.com/Candoo/vehicle-api/internal/database"
-	"github.com/Candoo/vehicle-api/internal/handlers"
-	"github.com/Candoo/vehicle-api/internal/repository"
-	_ "github.com/Candoo/vehicle-api/docs"
+	"github.com/Candoo/vehicles-api/internal/config"
+	"github.com/Candoo/vehicles-api/internal/database"
+	"github.com/Candoo/vehicles-api/internal/handlers"
+	"github.com/Candoo/vehicles-api/internal/repository"
+	_ "github.com/Candoo/vehicles-api/docs"
 )
 
 // @title Vehicle API
